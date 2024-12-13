@@ -96,6 +96,7 @@
             this.editCustBtn.TabIndex = 5;
             this.editCustBtn.Text = "Edit";
             this.editCustBtn.UseVisualStyleBackColor = true;
+            this.editCustBtn.Click += new System.EventHandler(this.editCustBtn_Click);
             // 
             // ManageCustomer
             // 
