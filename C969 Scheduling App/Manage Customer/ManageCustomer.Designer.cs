@@ -33,6 +33,7 @@
             this.addCustBtn = new System.Windows.Forms.Button();
             this.deleteCustBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
+            this.editCustBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridCustomer)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,7 +69,7 @@
             // deleteCustBtn
             // 
             this.deleteCustBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteCustBtn.Location = new System.Drawing.Point(177, 334);
+            this.deleteCustBtn.Location = new System.Drawing.Point(258, 334);
             this.deleteCustBtn.Name = "deleteCustBtn";
             this.deleteCustBtn.Size = new System.Drawing.Size(75, 37);
             this.deleteCustBtn.TabIndex = 3;
@@ -86,11 +87,22 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
+            // editCustBtn
+            // 
+            this.editCustBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.editCustBtn.Location = new System.Drawing.Point(177, 334);
+            this.editCustBtn.Name = "editCustBtn";
+            this.editCustBtn.Size = new System.Drawing.Size(75, 37);
+            this.editCustBtn.TabIndex = 5;
+            this.editCustBtn.Text = "Edit";
+            this.editCustBtn.UseVisualStyleBackColor = true;
+            // 
             // ManageCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.editCustBtn);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.deleteCustBtn);
             this.Controls.Add(this.addCustBtn);
@@ -111,5 +123,6 @@
         private System.Windows.Forms.Button addCustBtn;
         private System.Windows.Forms.Button deleteCustBtn;
         private System.Windows.Forms.Button cancelBtn;
+        private System.Windows.Forms.Button editCustBtn;
     }
 }

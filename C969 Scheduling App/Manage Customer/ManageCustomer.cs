@@ -45,6 +45,10 @@ namespace C969_Scheduling_App
                     JOIN city ct ON a.cityId = ct.cityId
                     JOIN country co ON ct.countryId = co.countryId;
             ";
+
+            //Try catch statement was used to prevent application termination incase of an unhandled error.
+            //Logging the error message will help with potential debugging in the future allowing you to view specific errors related to SQL syntax or column names.
+            
             try
             {
                 MySqlConnection conn = SqlConnection.GetConnection();
@@ -62,6 +66,11 @@ namespace C969_Scheduling_App
                     dataGridCustomer.Columns["Name"].Width = 140;
                     dataGridCustomer.Columns["Address"].Width = 280;
                     dataGridCustomer.Columns["PhoneNumber"].Width = 140;
+
+                    //Setting columns to readonly
+                    dataGridCustomer.Columns["Name"].ReadOnly = true;
+                    dataGridCustomer.Columns["Address"].ReadOnly = true;
+                    dataGridCustomer.Columns["PhoneNumber"].ReadOnly = true;
                 }
             }
             catch (Exception ex)
