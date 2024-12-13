@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,58 @@ namespace C969_Scheduling_App
         public ManageCustomer()
         {
             InitializeComponent();
+            LoadCustomerData(); 
+        }
+
+        private void addCustBtn_Click(object sender, EventArgs e)
+        {
+            AddCustomer addCustomer = new AddCustomer();
+            addCustomer.ShowDialog();
+            this.Show();
+        }
+
+        private void cancelBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
+        private void LoadCustomerData()
+        {
+            string query = @"
+                SELECT
+                    c.CustomerName AS Name,
+                    CONCAT(a.address, ', ', ct.city, ', ', co.country) AS Address,
+                    a.phone AS PhoneNumber
+                FROM
+                    customer c
+                    JOIN address a ON c.addressId = a.addressId
+                    JOIN city ct ON a.cityId = ct.cityId
+                    JOIN country co ON ct.countryId = co.countryId;
+            ";
+            try
+            {
+                MySqlConnection conn = SqlConnection.GetConnection();
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                    DataTable dataTable = new DataTable();
+
+                    //Fills data table w/ query results and binds them to the grid.
+                    adapter.Fill(dataTable);
+                    dataGridCustomer.DataSource = dataTable;
+
+                    //Custom column width
+                    dataGridCustomer.Columns["Name"].Width = 140;
+                    dataGridCustomer.Columns["Address"].Width = 280;
+                    dataGridCustomer.Columns["PhoneNumber"].Width = 140;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading customer data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

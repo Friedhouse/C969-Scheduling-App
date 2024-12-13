@@ -31,8 +31,6 @@ namespace C969_Scheduling_App
 
             if (VerifyCredentials(username, password))
             {
-                MessageBox.Show("Sign in successful!");
-
                 AppointmentForm appointmentForm = new AppointmentForm();
                 appointmentForm.Show();
                 this.Hide();
@@ -45,25 +43,23 @@ namespace C969_Scheduling_App
 
         private bool VerifyCredentials(string username, string password) 
         {
-            string connectionString = "server=127.0.0.1;user=sqlUser;database=client_schedule;port=3306;password=Passw0rd!";
             bool isValid = false;
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(connectionString))
+                MySqlConnection conn = SqlConnection.GetConnection();
+                string query = "SELECT * FROM user WHERE username=@username AND password=@password";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-                    conn.Open();
-                    string query = "SELECT * FROM user WHERE username=@username AND password=@password";
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    cmd.Parameters.AddWithValue("@username", username);
+                    cmd.Parameters.AddWithValue("@password", password);
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password);
-                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        if (reader.Read())
                         {
-                            if (reader.Read())
-                            {
-                                isValid = true;
-                            }
+                            isValid = true;
                         }
                     }
                 }

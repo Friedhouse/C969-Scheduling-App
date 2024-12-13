@@ -16,5 +16,11 @@ namespace C969_Scheduling_App
         {
             InitializeComponent();
         }
+
+        private void cancelCustBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
     }
 }

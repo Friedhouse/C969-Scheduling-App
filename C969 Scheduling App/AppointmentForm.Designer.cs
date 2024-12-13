@@ -147,6 +147,7 @@
             this.manageCustBtn.TabIndex = 10;
             this.manageCustBtn.Text = "Manage Customer";
             this.manageCustBtn.UseVisualStyleBackColor = true;
+            this.manageCustBtn.Click += new System.EventHandler(this.manageCustBtn_Click);
             // 
             // signOutBtn
             // 
@@ -157,6 +158,7 @@
             this.signOutBtn.TabIndex = 11;
             this.signOutBtn.Text = "Sign Out";
             this.signOutBtn.UseVisualStyleBackColor = true;
+            this.signOutBtn.Click += new System.EventHandler(this.signOutBtn_Click);
             // 
             // closeBtn
             // 
@@ -167,6 +169,7 @@
             this.closeBtn.TabIndex = 12;
             this.closeBtn.Text = "Close";
             this.closeBtn.UseVisualStyleBackColor = true;
+            this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
             // AppointmentForm
             // 

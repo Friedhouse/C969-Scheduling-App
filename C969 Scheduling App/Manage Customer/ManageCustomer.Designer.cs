@@ -28,46 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.nameDataGrid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addressDataGrid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.phoneDataGrid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridCustomer = new System.Windows.Forms.DataGridView();
             this.manageCustLabel = new System.Windows.Forms.Label();
             this.addCustBtn = new System.Windows.Forms.Button();
             this.deleteCustBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridCustomer)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dataGridCustomer
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGrid,
-            this.addressDataGrid,
-            this.phoneDataGrid});
-            this.dataGridView1.Location = new System.Drawing.Point(96, 83);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(603, 245);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // nameDataGrid
-            // 
-            this.nameDataGrid.HeaderText = "Name";
-            this.nameDataGrid.Name = "nameDataGrid";
-            this.nameDataGrid.Width = 140;
-            // 
-            // addressDataGrid
-            // 
-            this.addressDataGrid.HeaderText = "Address";
-            this.addressDataGrid.Name = "addressDataGrid";
-            this.addressDataGrid.Width = 280;
-            // 
-            // phoneDataGrid
-            // 
-            this.phoneDataGrid.HeaderText = "Phone Number";
-            this.phoneDataGrid.Name = "phoneDataGrid";
-            this.phoneDataGrid.Width = 140;
+            this.dataGridCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridCustomer.Location = new System.Drawing.Point(96, 83);
+            this.dataGridCustomer.Name = "dataGridCustomer";
+            this.dataGridCustomer.Size = new System.Drawing.Size(603, 245);
+            this.dataGridCustomer.TabIndex = 0;
             // 
             // manageCustLabel
             // 
@@ -88,6 +63,7 @@
             this.addCustBtn.TabIndex = 2;
             this.addCustBtn.Text = "Add";
             this.addCustBtn.UseVisualStyleBackColor = true;
+            this.addCustBtn.Click += new System.EventHandler(this.addCustBtn_Click);
             // 
             // deleteCustBtn
             // 
@@ -108,6 +84,7 @@
             this.cancelBtn.TabIndex = 4;
             this.cancelBtn.Text = "Cancel";
             this.cancelBtn.UseVisualStyleBackColor = true;
+            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
             // ManageCustomer
             // 
@@ -118,10 +95,10 @@
             this.Controls.Add(this.deleteCustBtn);
             this.Controls.Add(this.addCustBtn);
             this.Controls.Add(this.manageCustLabel);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridCustomer);
             this.Name = "ManageCustomer";
             this.Text = "ManageCustomer";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridCustomer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,10 +106,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn addressDataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phoneDataGrid;
+        private System.Windows.Forms.DataGridView dataGridCustomer;
         private System.Windows.Forms.Label manageCustLabel;
         private System.Windows.Forms.Button addCustBtn;
         private System.Windows.Forms.Button deleteCustBtn;

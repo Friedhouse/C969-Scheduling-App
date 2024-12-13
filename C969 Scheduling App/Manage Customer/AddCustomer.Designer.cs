@@ -73,7 +73,7 @@
             // 
             this.addCustLabel.AutoSize = true;
             this.addCustLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addCustLabel.Location = new System.Drawing.Point(87, 37);
+            this.addCustLabel.Location = new System.Drawing.Point(99, 38);
             this.addCustLabel.Name = "addCustLabel";
             this.addCustLabel.Size = new System.Drawing.Size(148, 25);
             this.addCustLabel.TabIndex = 3;
@@ -121,6 +121,7 @@
             this.cancelCustBtn.TabIndex = 8;
             this.cancelCustBtn.Text = "Cancel";
             this.cancelCustBtn.UseVisualStyleBackColor = true;
+            this.cancelCustBtn.Click += new System.EventHandler(this.cancelCustBtn_Click);
             // 
             // AddCustomer
             // 
