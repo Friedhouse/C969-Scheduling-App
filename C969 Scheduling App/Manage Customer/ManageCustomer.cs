@@ -21,9 +21,13 @@ namespace C969_Scheduling_App
 
         private void addCustBtn_Click(object sender, EventArgs e)
         {
-            AddCustomer addCustomer = new AddCustomer();
-            addCustomer.ShowDialog();
-            this.Show();
+            using (AddCustomer addCustomer = new AddCustomer())
+            {
+                if (addCustomer.ShowDialog() == DialogResult.OK)
+                {
+                    LoadCustomerData();
+                }
+            }
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
