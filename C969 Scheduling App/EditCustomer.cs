@@ -23,7 +23,7 @@ namespace C969_Scheduling_App
             // Prepopulate textboxes
             textBoxName.Text = name;
             textBoxAddress.Text = address;
-            textBoxAddress.Text = address2;
+            textBoxAddress2.Text = address2;
             textBoxPhone.Text = phone;
             textBoxPostalCode.Text = postalCode;
             textBoxCity.Text = city;
@@ -79,6 +79,7 @@ namespace C969_Scheduling_App
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
+
                     cmd.Parameters.AddWithValue("@CustomerName", name);
                     cmd.Parameters.AddWithValue("@Address", address);
                     cmd.Parameters.AddWithValue("@Address2", address2);
@@ -97,7 +98,7 @@ namespace C969_Scheduling_App
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error updating customer: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error updating customer: {ex.Message}\n{ex.StackTrace}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -119,6 +120,12 @@ namespace C969_Scheduling_App
                 if (!char.IsDigit(phone[i])) return false;
             }
             return true;
+        }
+
+        private void cancelCustBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            this.Close();
         }
     }
 }

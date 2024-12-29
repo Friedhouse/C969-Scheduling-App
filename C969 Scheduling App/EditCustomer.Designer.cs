@@ -38,13 +38,13 @@
             this.textBoxCity = new System.Windows.Forms.TextBox();
             this.cancelCustBtn = new System.Windows.Forms.Button();
             this.saveCustBtn = new System.Windows.Forms.Button();
-            this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.textBoxPhone = new System.Windows.Forms.TextBox();
             this.textBoxName = new System.Windows.Forms.TextBox();
             this.addCustLabel = new System.Windows.Forms.Label();
             this.addressLabel = new System.Windows.Forms.Label();
             this.phoneLabel = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
+            this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label4
@@ -124,6 +124,7 @@
             this.cancelCustBtn.TabIndex = 25;
             this.cancelCustBtn.Text = "Cancel";
             this.cancelCustBtn.UseVisualStyleBackColor = true;
+            this.cancelCustBtn.Click += new System.EventHandler(this.cancelCustBtn_Click);
             // 
             // saveCustBtn
             // 
@@ -135,13 +136,6 @@
             this.saveCustBtn.Text = "Save";
             this.saveCustBtn.UseVisualStyleBackColor = true;
             this.saveCustBtn.Click += new System.EventHandler(this.saveCustBtn_Click);
-            // 
-            // textBoxAddress
-            // 
-            this.textBoxAddress.Location = new System.Drawing.Point(94, 132);
-            this.textBoxAddress.Name = "textBoxAddress";
-            this.textBoxAddress.Size = new System.Drawing.Size(235, 20);
-            this.textBoxAddress.TabIndex = 23;
             // 
             // textBoxPhone
             // 
@@ -198,11 +192,20 @@
             this.nameLabel.TabIndex = 17;
             this.nameLabel.Text = "Name";
             // 
+            // textBoxAddress
+            // 
+            this.textBoxAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.textBoxAddress.Location = new System.Drawing.Point(94, 134);
+            this.textBoxAddress.Name = "textBoxAddress";
+            this.textBoxAddress.Size = new System.Drawing.Size(235, 20);
+            this.textBoxAddress.TabIndex = 34;
+            // 
             // EditCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(368, 424);
+            this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.textBoxPostalCode);
             this.Controls.Add(this.label3);
@@ -213,7 +216,6 @@
             this.Controls.Add(this.textBoxCity);
             this.Controls.Add(this.cancelCustBtn);
             this.Controls.Add(this.saveCustBtn);
-            this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.textBoxPhone);
             this.Controls.Add(this.textBoxName);
             this.Controls.Add(this.addCustLabel);
@@ -239,12 +241,12 @@
         private System.Windows.Forms.TextBox textBoxCity;
         private System.Windows.Forms.Button cancelCustBtn;
         private System.Windows.Forms.Button saveCustBtn;
-        private System.Windows.Forms.TextBox textBoxAddress;
         private System.Windows.Forms.TextBox textBoxPhone;
         private System.Windows.Forms.TextBox textBoxName;
         private System.Windows.Forms.Label addCustLabel;
         private System.Windows.Forms.Label addressLabel;
         private System.Windows.Forms.Label phoneLabel;
         private System.Windows.Forms.Label nameLabel;
+        private System.Windows.Forms.TextBox textBoxAddress;
     }
 }

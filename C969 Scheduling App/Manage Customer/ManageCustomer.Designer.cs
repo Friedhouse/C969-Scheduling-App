@@ -42,6 +42,7 @@
             this.dataGridCustomer.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridCustomer.Location = new System.Drawing.Point(96, 83);
             this.dataGridCustomer.Name = "dataGridCustomer";
+            this.dataGridCustomer.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridCustomer.Size = new System.Drawing.Size(603, 245);
             this.dataGridCustomer.TabIndex = 0;
             // 

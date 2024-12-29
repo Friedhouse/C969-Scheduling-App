@@ -47,7 +47,7 @@ namespace C969_Scheduling_App
                     a.postalCode AS PostalCode,
                     ct.city AS city,
                     co.country AS Country,
-                    CONCAT(a.address, ', ', ct.city, ', ', co.country) AS Address,
+                    CONCAT(a.address, IFNULL(CONCAT(', ', a.address2), ''), ', ', ct.city, ', ', co.country) AS Address,
                     a.phone AS PhoneNumber
                 FROM
                     customer c
@@ -109,7 +109,7 @@ namespace C969_Scheduling_App
 
             int customerId = Convert.ToInt32(selectedRow.Cells["CustomerId"].Value);
             string name = selectedRow.Cells["Name"].Value.ToString();
-            string address = selectedRow.Cells["Address"].Value.ToString();
+            string address = selectedRow.Cells["StreetAddress"].Value.ToString();
             string address2 = selectedRow.Cells["AddressLine2"].Value.ToString();
             string phone = selectedRow.Cells["PhoneNumber"].Value.ToString();
             string postalCode = selectedRow.Cells["PostalCode"].Value.ToString();
