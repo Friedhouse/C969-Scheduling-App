@@ -54,6 +54,8 @@ namespace C969_Scheduling_App
             {
                 MySqlConnection conn = SqlConnection.GetConnection();
 
+                conn.Open();
+
                 //Insert or find the country
                 string getCountryIDQuery = @"
                     INSERT INTO country (country, createDate, createdBy, lastUpdate, lastUpdateBy)

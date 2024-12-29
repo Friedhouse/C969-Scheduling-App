@@ -95,6 +95,7 @@ namespace C969_Scheduling_App
             {
                 MessageBox.Show("Error loading customer data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            Console.WriteLine("LoadCustomerData() called.");
         }
 
         private void editCustBtn_Click(object sender, EventArgs e)
@@ -120,8 +121,77 @@ namespace C969_Scheduling_App
             {
                 if (editCustomer.ShowDialog() == DialogResult.OK)
                 {
-                    // Refresh the DataGridView after editing
                     LoadCustomerData();
+                }
+            }
+        }
+
+        private void deleteCustBtn_Click(object sender, EventArgs e)
+        {
+            {
+                if (dataGridCustomer.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Please select a customer to delete.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DataGridViewRow selectedRow = dataGridCustomer.SelectedRows[0];
+                int customerId = Convert.ToInt32(selectedRow.Cells["CustomerID"].Value);
+
+                var result = MessageBox.Show("Are you sure you want to delete this customer?", "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                try
+                {
+                    using (MySqlConnection conn = SqlConnection.GetConnection())
+                    {
+                        conn.Open();
+                        // Used a transaction here to ensure all related data is deleted
+                        using (MySqlTransaction transaction = conn.BeginTransaction())
+                        {
+                            try
+                            {
+                                string deleteCustomerQuery = "DELETE FROM customer WHERE customerID = @CustomerID;";
+                                using (MySqlCommand cmd = new MySqlCommand(deleteCustomerQuery, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@CustomerID", customerId);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                string deleteAddressQuery = @"
+                                    DELETE FROM address
+                                    WHERE addressID IN (
+                                    SELECT addressID FROM customer WHERE customerID = @CustomerID
+                                    );";
+
+                                using (MySqlCommand cmd = new MySqlCommand(deleteAddressQuery, conn, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("@CustomerID", customerId);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                transaction.Commit();
+
+                                MessageBox.Show("Customer deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                MessageBox.Show($"Error deleting customer: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+
+                    Console.WriteLine("Reloading customer data...");
+                    dataGridCustomer.DataSource = null;
+                    LoadCustomerData();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Database error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

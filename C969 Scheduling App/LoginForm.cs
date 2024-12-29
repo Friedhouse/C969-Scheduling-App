@@ -47,19 +47,23 @@ namespace C969_Scheduling_App
 
             try
             {
-                MySqlConnection conn = SqlConnection.GetConnection();
-                string query = "SELECT * FROM user WHERE username=@username AND password=@password";
-
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (MySqlConnection conn = SqlConnection.GetConnection())
                 {
-                    cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@password", password);
+                    conn.Open();
 
-                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    string query = "SELECT * FROM user WHERE username=@username AND password=@password";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        if (reader.Read())
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@password", password);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            isValid = true;
+                            if (reader.Read())
+                            {
+                                isValid = true;
+                            }
                         }
                     }
                 }

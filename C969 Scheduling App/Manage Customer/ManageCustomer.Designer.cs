@@ -76,6 +76,7 @@
             this.deleteCustBtn.TabIndex = 3;
             this.deleteCustBtn.Text = "Delete";
             this.deleteCustBtn.UseVisualStyleBackColor = true;
+            this.deleteCustBtn.Click += new System.EventHandler(this.deleteCustBtn_Click);
             // 
             // cancelBtn
             // 

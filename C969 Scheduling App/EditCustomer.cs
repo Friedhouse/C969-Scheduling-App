@@ -59,6 +59,8 @@ namespace C969_Scheduling_App
             {
                 MySqlConnection conn = SqlConnection.GetConnection();
 
+                conn.Open();
+
                 string query = @"
                 UPDATE customer c
                 JOIN address a ON c.addressId = a.addressId
@@ -79,7 +81,7 @@ namespace C969_Scheduling_App
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
-
+                    cmd.Parameters.AddWithValue("@CustomerId", customerId);
                     cmd.Parameters.AddWithValue("@CustomerName", name);
                     cmd.Parameters.AddWithValue("@Address", address);
                     cmd.Parameters.AddWithValue("@Address2", address2);
@@ -109,7 +111,7 @@ namespace C969_Scheduling_App
                 return false;
             }
 
-            if (phone[3] != '-') //4th character needs to be a dash
+            if (phone[3] != '-') //Dash needed after frist 3 numbers
             {
                 return false;
             }
