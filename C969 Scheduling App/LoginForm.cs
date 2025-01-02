@@ -29,17 +29,35 @@ namespace C969_Scheduling_App
             string username = textBoxUsername.Text;
             string password = textBoxPassword.Text;
 
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Please enter both username and password.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (VerifyCredentials(username, password))
             {
-                AppointmentForm appointmentForm = new AppointmentForm();
-                appointmentForm.Show();
-                this.Hide();
+                int userId = GetUserId(username, password);
+                if (userId > 0)
+                {
+                    this.Hide();
+                    using (AppointmentForm appointmentForm = new AppointmentForm(userId))
+                    {
+                        appointmentForm.ShowDialog();
+                    }
+                    this.Show(); // Show the login form again if needed
+                }
+                else
+                {
+                    MessageBox.Show("Unable to retrieve user information. Login failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
-                MessageBox.Show(translations["error_invalid_credentials"], "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
-            }  
+                MessageBox.Show("Invalid username or password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
 
         private bool VerifyCredentials(string username, string password) 
         {
@@ -76,6 +94,7 @@ namespace C969_Scheduling_App
             return isValid;
         }
 
+
         private void SetLocaliazation()
         {
             //Determine's user's current culture info
@@ -103,6 +122,37 @@ namespace C969_Scheduling_App
             usernameLabel.Text = translations["username_label"];
             passwordLabel.Text = translations["password_label"];
             signInBtn.Text = translations["signin_button"];
+        }
+
+
+        private int GetUserId(string username, string password)
+        {
+            string query = "SELECT userId FROM user WHERE username = @username AND password = @password";
+
+            try
+            {
+                using (MySqlConnection conn = SqlConnection.GetConnection())
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@password", password);
+
+                        object result = cmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            return Convert.ToInt32(result);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error retrieving user ID: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return -1; // Return an invalid userId if login fails
         }
     }
 }

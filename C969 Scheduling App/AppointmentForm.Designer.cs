@@ -41,27 +41,38 @@
             this.manageCustBtn = new System.Windows.Forms.Button();
             this.signOutBtn = new System.Windows.Forms.Button();
             this.closeBtn = new System.Windows.Forms.Button();
+            this.start = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.end = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.apptGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // apptGridView
             // 
             this.apptGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.apptGridView.Location = new System.Drawing.Point(257, 78);
+            this.apptGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.start,
+            this.end,
+            this.title,
+            this.type,
+            this.description});
+            this.apptGridView.Location = new System.Drawing.Point(270, 83);
             this.apptGridView.Name = "apptGridView";
-            this.apptGridView.Size = new System.Drawing.Size(1825, 817);
+            this.apptGridView.Size = new System.Drawing.Size(843, 817);
             this.apptGridView.TabIndex = 0;
             // 
             // monthCalendar
             // 
-            this.monthCalendar.Location = new System.Drawing.Point(18, 78);
+            this.monthCalendar.Location = new System.Drawing.Point(18, 83);
             this.monthCalendar.Name = "monthCalendar";
             this.monthCalendar.TabIndex = 1;
             // 
             // deleteApptBtn
             // 
             this.deleteApptBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deleteApptBtn.Location = new System.Drawing.Point(180, 366);
+            this.deleteApptBtn.Location = new System.Drawing.Point(180, 374);
             this.deleteApptBtn.Name = "deleteApptBtn";
             this.deleteApptBtn.Size = new System.Drawing.Size(65, 58);
             this.deleteApptBtn.TabIndex = 2;
@@ -71,7 +82,7 @@
             // editApptBtn
             // 
             this.editApptBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.editApptBtn.Location = new System.Drawing.Point(100, 366);
+            this.editApptBtn.Location = new System.Drawing.Point(100, 374);
             this.editApptBtn.Name = "editApptBtn";
             this.editApptBtn.Size = new System.Drawing.Size(65, 58);
             this.editApptBtn.TabIndex = 3;
@@ -81,18 +92,19 @@
             // addApptBtn
             // 
             this.addApptBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addApptBtn.Location = new System.Drawing.Point(18, 366);
+            this.addApptBtn.Location = new System.Drawing.Point(18, 374);
             this.addApptBtn.Name = "addApptBtn";
             this.addApptBtn.Size = new System.Drawing.Size(65, 58);
             this.addApptBtn.TabIndex = 4;
             this.addApptBtn.Text = "Add";
             this.addApptBtn.UseVisualStyleBackColor = true;
+            this.addApptBtn.Click += new System.EventHandler(this.addApptBtn_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(40, 322);
+            this.label1.Location = new System.Drawing.Point(40, 330);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(180, 31);
             this.label1.TabIndex = 5;
@@ -102,7 +114,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(261, 19);
+            this.label2.Location = new System.Drawing.Point(336, 24);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(180, 31);
             this.label2.TabIndex = 6;
@@ -111,7 +123,7 @@
             // currentWeekBtn
             // 
             this.currentWeekBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currentWeekBtn.Location = new System.Drawing.Point(477, 19);
+            this.currentWeekBtn.Location = new System.Drawing.Point(612, 24);
             this.currentWeekBtn.Name = "currentWeekBtn";
             this.currentWeekBtn.Size = new System.Drawing.Size(139, 41);
             this.currentWeekBtn.TabIndex = 7;
@@ -121,7 +133,7 @@
             // currentMonthBtn
             // 
             this.currentMonthBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.currentMonthBtn.Location = new System.Drawing.Point(648, 19);
+            this.currentMonthBtn.Location = new System.Drawing.Point(793, 24);
             this.currentMonthBtn.Name = "currentMonthBtn";
             this.currentMonthBtn.Size = new System.Drawing.Size(139, 41);
             this.currentMonthBtn.TabIndex = 8;
@@ -131,7 +143,7 @@
             // allApptBtn
             // 
             this.allApptBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.allApptBtn.Location = new System.Drawing.Point(819, 19);
+            this.allApptBtn.Location = new System.Drawing.Point(974, 24);
             this.allApptBtn.Name = "allApptBtn";
             this.allApptBtn.Size = new System.Drawing.Size(139, 41);
             this.allApptBtn.TabIndex = 9;
@@ -141,7 +153,7 @@
             // manageCustBtn
             // 
             this.manageCustBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.manageCustBtn.Location = new System.Drawing.Point(18, 441);
+            this.manageCustBtn.Location = new System.Drawing.Point(18, 449);
             this.manageCustBtn.Name = "manageCustBtn";
             this.manageCustBtn.Size = new System.Drawing.Size(227, 43);
             this.manageCustBtn.TabIndex = 10;
@@ -152,7 +164,7 @@
             // signOutBtn
             // 
             this.signOutBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.signOutBtn.Location = new System.Drawing.Point(1806, 901);
+            this.signOutBtn.Location = new System.Drawing.Point(837, 919);
             this.signOutBtn.Name = "signOutBtn";
             this.signOutBtn.Size = new System.Drawing.Size(141, 43);
             this.signOutBtn.TabIndex = 11;
@@ -163,7 +175,7 @@
             // closeBtn
             // 
             this.closeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.closeBtn.Location = new System.Drawing.Point(1953, 901);
+            this.closeBtn.Location = new System.Drawing.Point(984, 919);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(129, 43);
             this.closeBtn.TabIndex = 12;
@@ -171,11 +183,44 @@
             this.closeBtn.UseVisualStyleBackColor = true;
             this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
+            // start
+            // 
+            this.start.Frozen = true;
+            this.start.HeaderText = "Start Time";
+            this.start.Name = "start";
+            this.start.ReadOnly = true;
+            // 
+            // end
+            // 
+            this.end.Frozen = true;
+            this.end.HeaderText = "End Time";
+            this.end.Name = "end";
+            this.end.ReadOnly = true;
+            // 
+            // title
+            // 
+            this.title.HeaderText = "Title";
+            this.title.Name = "title";
+            this.title.ReadOnly = true;
+            // 
+            // type
+            // 
+            this.type.HeaderText = "Type";
+            this.type.Name = "type";
+            this.type.ReadOnly = true;
+            // 
+            // description
+            // 
+            this.description.HeaderText = "Description";
+            this.description.Name = "description";
+            this.description.ReadOnly = true;
+            this.description.Width = 400;
+            // 
             // AppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2094, 1001);
+            this.ClientSize = new System.Drawing.Size(1182, 988);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.signOutBtn);
             this.Controls.Add(this.manageCustBtn);
@@ -212,5 +257,10 @@
         private System.Windows.Forms.Button manageCustBtn;
         private System.Windows.Forms.Button signOutBtn;
         private System.Windows.Forms.Button closeBtn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn start;
+        private System.Windows.Forms.DataGridViewTextBoxColumn end;
+        private System.Windows.Forms.DataGridViewTextBoxColumn title;
+        private System.Windows.Forms.DataGridViewTextBoxColumn type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn description;
     }
 }
