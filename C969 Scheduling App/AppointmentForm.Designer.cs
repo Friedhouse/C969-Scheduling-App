@@ -41,25 +41,17 @@
             this.manageCustBtn = new System.Windows.Forms.Button();
             this.signOutBtn = new System.Windows.Forms.Button();
             this.closeBtn = new System.Windows.Forms.Button();
-            this.start = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.end = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.title = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.apptGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // apptGridView
             // 
+            this.apptGridView.AllowUserToDeleteRows = false;
             this.apptGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.apptGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.start,
-            this.end,
-            this.title,
-            this.type,
-            this.description});
             this.apptGridView.Location = new System.Drawing.Point(270, 83);
             this.apptGridView.Name = "apptGridView";
+            this.apptGridView.ReadOnly = true;
+            this.apptGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.apptGridView.Size = new System.Drawing.Size(843, 817);
             this.apptGridView.TabIndex = 0;
             // 
@@ -88,6 +80,7 @@
             this.editApptBtn.TabIndex = 3;
             this.editApptBtn.Text = "Edit";
             this.editApptBtn.UseVisualStyleBackColor = true;
+            this.editApptBtn.Click += new System.EventHandler(this.editApptBtn_Click);
             // 
             // addApptBtn
             // 
@@ -129,6 +122,7 @@
             this.currentWeekBtn.TabIndex = 7;
             this.currentWeekBtn.Text = "Current Week";
             this.currentWeekBtn.UseVisualStyleBackColor = true;
+            this.currentWeekBtn.Click += new System.EventHandler(this.currentWeekBtn_Click);
             // 
             // currentMonthBtn
             // 
@@ -139,6 +133,7 @@
             this.currentMonthBtn.TabIndex = 8;
             this.currentMonthBtn.Text = "Current Month";
             this.currentMonthBtn.UseVisualStyleBackColor = true;
+            this.currentMonthBtn.Click += new System.EventHandler(this.currentMonthBtn_Click);
             // 
             // allApptBtn
             // 
@@ -149,6 +144,7 @@
             this.allApptBtn.TabIndex = 9;
             this.allApptBtn.Text = "All Appointments";
             this.allApptBtn.UseVisualStyleBackColor = true;
+            this.allApptBtn.Click += new System.EventHandler(this.allApptBtn_Click);
             // 
             // manageCustBtn
             // 
@@ -182,39 +178,6 @@
             this.closeBtn.Text = "Close";
             this.closeBtn.UseVisualStyleBackColor = true;
             this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
-            // 
-            // start
-            // 
-            this.start.Frozen = true;
-            this.start.HeaderText = "Start Time";
-            this.start.Name = "start";
-            this.start.ReadOnly = true;
-            // 
-            // end
-            // 
-            this.end.Frozen = true;
-            this.end.HeaderText = "End Time";
-            this.end.Name = "end";
-            this.end.ReadOnly = true;
-            // 
-            // title
-            // 
-            this.title.HeaderText = "Title";
-            this.title.Name = "title";
-            this.title.ReadOnly = true;
-            // 
-            // type
-            // 
-            this.type.HeaderText = "Type";
-            this.type.Name = "type";
-            this.type.ReadOnly = true;
-            // 
-            // description
-            // 
-            this.description.HeaderText = "Description";
-            this.description.Name = "description";
-            this.description.ReadOnly = true;
-            this.description.Width = 400;
             // 
             // AppointmentForm
             // 
@@ -257,10 +220,5 @@
         private System.Windows.Forms.Button manageCustBtn;
         private System.Windows.Forms.Button signOutBtn;
         private System.Windows.Forms.Button closeBtn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn start;
-        private System.Windows.Forms.DataGridViewTextBoxColumn end;
-        private System.Windows.Forms.DataGridViewTextBoxColumn title;
-        private System.Windows.Forms.DataGridViewTextBoxColumn type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn description;
     }
 }

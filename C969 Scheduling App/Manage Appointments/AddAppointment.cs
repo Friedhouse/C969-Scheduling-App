@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static C969_Scheduling_App.loginForm;
 
 namespace C969_Scheduling_App.Manage_Appointments
 {
@@ -20,6 +21,7 @@ namespace C969_Scheduling_App.Manage_Appointments
             this.userId = userId;
             LoadCustomers();
             AddAppointmentForm_Load();
+            
         }
 
         private void cancelApptBtn_Click(object sender, EventArgs e)
@@ -77,8 +79,8 @@ namespace C969_Scheduling_App.Manage_Appointments
                         cmd.Parameters.AddWithValue("@Url", "");
                         cmd.Parameters.AddWithValue("@Start", start);
                         cmd.Parameters.AddWithValue("@End", end);
-                        cmd.Parameters.AddWithValue("@CreatedBy", Environment.UserName);
-                        cmd.Parameters.AddWithValue("@LastUpdateBy", Environment.UserName);
+                        cmd.Parameters.AddWithValue("@CreatedBy", LoggedInUser.Username);
+                        cmd.Parameters.AddWithValue("@LastUpdateBy", LoggedInUser.Username);
 
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Appointment added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -124,6 +126,7 @@ namespace C969_Scheduling_App.Manage_Appointments
             {
                 MessageBox.Show($"Error loading customers: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            comboCustBox.DisplayMember = "Name";
         }
 
 
@@ -187,12 +190,12 @@ namespace C969_Scheduling_App.Manage_Appointments
         {
             // Configure Start DateTimePicker
             dateTimePickerStart.Format = DateTimePickerFormat.Custom;
-            dateTimePickerStart.CustomFormat = "MM/dd/yyyy hh:mm tt"; // 12-hour format with AM/PM
+            dateTimePickerStart.CustomFormat = "MM/dd/yyyy hh:mm tt";
             dateTimePickerStart.ShowUpDown = true;
 
             // Configure End DateTimePicker
             dateTimePickerEnd.Format = DateTimePickerFormat.Custom;
-            dateTimePickerEnd.CustomFormat = "MM/dd/yyyy hh:mm tt"; // 12-hour format with AM/PM
+            dateTimePickerEnd.CustomFormat = "MM/dd/yyyy hh:mm tt";
             dateTimePickerEnd.ShowUpDown = true;
 
             // Set default values

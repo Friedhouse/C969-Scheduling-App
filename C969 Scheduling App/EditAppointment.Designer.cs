@@ -116,6 +116,7 @@
             this.cancelApptBtn.TabIndex = 62;
             this.cancelApptBtn.Text = "Cancel";
             this.cancelApptBtn.UseVisualStyleBackColor = true;
+            this.cancelApptBtn.Click += new System.EventHandler(this.cancelApptBtn_Click);
             // 
             // saveApptBtn
             // 
@@ -126,6 +127,7 @@
             this.saveApptBtn.TabIndex = 61;
             this.saveApptBtn.Text = "Save";
             this.saveApptBtn.UseVisualStyleBackColor = true;
+            this.saveApptBtn.Click += new System.EventHandler(this.saveApptBtn_Click);
             // 
             // textBoxDescription
             // 

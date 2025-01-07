@@ -40,12 +40,15 @@ namespace C969_Scheduling_App
                 int userId = GetUserId(username, password);
                 if (userId > 0)
                 {
+                    //Stores the logged in user info globally.
+                    LoggedInUser.UserId = userId;
+                    LoggedInUser.Username = username;
+
                     this.Hide();
                     using (AppointmentForm appointmentForm = new AppointmentForm(userId))
                     {
                         appointmentForm.ShowDialog();
                     }
-                    this.Show(); // Show the login form again if needed
                 }
                 else
                 {
@@ -127,7 +130,7 @@ namespace C969_Scheduling_App
 
         private int GetUserId(string username, string password)
         {
-            string query = "SELECT userId FROM user WHERE username = @username AND password = @password";
+            string query = "SELECT userId FROM user WHERE userName = @UserName AND password = @Password";
 
             try
             {
@@ -136,8 +139,9 @@ namespace C969_Scheduling_App
                     conn.Open();
                     using (MySqlCommand cmd = new MySqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@username", username);
-                        cmd.Parameters.AddWithValue("@password", password);
+                        //Adds username globally
+                        cmd.Parameters.AddWithValue("@UserName", username);
+                        cmd.Parameters.AddWithValue("@Password", password);
 
                         object result = cmd.ExecuteScalar();
                         if (result != null)
@@ -153,6 +157,12 @@ namespace C969_Scheduling_App
             }
 
             return -1; // Return an invalid userId if login fails
+        }
+
+        public static class LoggedInUser
+        {
+            public static int UserId { get; set; }
+            public static string Username { get; set; }
         }
     }
 }

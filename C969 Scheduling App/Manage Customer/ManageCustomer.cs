@@ -63,8 +63,9 @@ namespace C969_Scheduling_App
             {
                 MySqlConnection conn = SqlConnection.GetConnection();
 
+                conn.Open();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
+                {                   
                     MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     DataTable dataTable = new DataTable();
 
