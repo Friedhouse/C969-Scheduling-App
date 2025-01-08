@@ -43,6 +43,7 @@ namespace C969_Scheduling_App
                     //Stores the logged in user info globally.
                     LoggedInUser.UserId = userId;
                     LoggedInUser.Username = username;
+                    CheckUpcomingAppointments(userId);
 
                     this.Hide();
                     using (AppointmentForm appointmentForm = new AppointmentForm(userId))
@@ -163,6 +164,49 @@ namespace C969_Scheduling_App
         {
             public static int UserId { get; set; }
             public static string Username { get; set; }
+        }
+
+
+        private void CheckUpcomingAppointments(int userId)
+        {
+            string query = @"
+        SELECT title, start 
+        FROM appointment 
+        WHERE userId = @UserId 
+        AND TIMESTAMPDIFF(MINUTE, NOW(), start) BETWEEN 0 AND 15";
+
+            try
+            {
+                using (MySqlConnection conn = SqlConnection.GetConnection())
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserId", userId);
+
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                string alertMessage = "You have the following upcoming appointments within 15 minutes:\n\n";
+
+                                while (reader.Read())
+                                {
+                                    string title = reader["title"].ToString();
+                                    DateTime start = Convert.ToDateTime(reader["start"]);
+                                    alertMessage += $"- {title} at {start.ToString("MM/dd/yyyy hh:mm tt")}\n";
+                                }
+
+                                MessageBox.Show(alertMessage, "Upcoming Appointments", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error checking upcoming appointments: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

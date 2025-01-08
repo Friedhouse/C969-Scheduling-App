@@ -21,9 +21,8 @@ namespace C969_Scheduling_App
         public AppointmentForm(int userId)
         {
             InitializeComponent();
-            Console.WriteLine($"Logged-in User ID: {LoggedInUser.UserId}");
-            Console.WriteLine($"Logged-in Username: {LoggedInUser.Username}");
             this.Load += new EventHandler(AppointmentForm_Load);
+            this.monthCalendar.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.monthCalendar_DateChanged);
             this.userId = userId;
         }
 
@@ -41,20 +40,17 @@ namespace C969_Scheduling_App
                         MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                         DataTable dataTable = new DataTable();
                         adapter.Fill(dataTable);
-                        
 
-                        Console.WriteLine("Columns in DataTable:");
-                        foreach (DataColumn column in dataTable.Columns)
-                        {
-                            Console.WriteLine(column.ColumnName);
-                        }
-
-                        Console.WriteLine("Rows in DataTable:");
                         foreach (DataRow row in dataTable.Rows)
                         {
-                            Console.WriteLine(string.Join(", ", row.ItemArray));
-                        }
+                            DateTime utcStart = Convert.ToDateTime(row["start"]);
+                            DateTime utcEnd = Convert.ToDateTime(row["end"]);
 
+                            row["start"] = TimeZoneHelper.ConvertToLocalTime(utcStart);
+                            row["end"] = TimeZoneHelper.ConvertToLocalTime(utcEnd);
+                            
+                        }
+                        
                         // Format the DataGridView
                         apptGridView.DataSource = dataTable;
                         apptGridView.AutoGenerateColumns = true;
@@ -66,12 +62,6 @@ namespace C969_Scheduling_App
                         apptGridView.Columns["description"].Width = 350;
                         apptGridView.Refresh();
 
-                        // Debugging: Verify DataGridView columns
-                        Console.WriteLine("Columns in DataGridView:");
-                        foreach (DataGridViewColumn column in apptGridView.Columns)
-                        {
-                            Console.WriteLine(column.Name + " - " + column.DataPropertyName);
-                        }
                     }
                 }
             }
@@ -87,8 +77,7 @@ namespace C969_Scheduling_App
         {
             CurrentQuery = @"
                 SELECT appointmentId, title, type, description, start, end 
-                FROM appointment
-                WHERE YEAR(start) = YEAR(CURDATE()) AND MONTH(start) = MONTH(CURDATE());";
+                FROM appointment;";
 
             LoadAppointments(CurrentQuery);
         }
@@ -134,6 +123,7 @@ namespace C969_Scheduling_App
             {
                 if (addAppointment.ShowDialog() == DialogResult.OK)
                 {
+                    // Refresh the DataGridView
                     LoadAppointments(CurrentQuery);
                 }
             }
@@ -153,10 +143,62 @@ namespace C969_Scheduling_App
             using (EditAppointment editAppointmentForm = new EditAppointment(appointmentId))
             {
                 if (editAppointmentForm.ShowDialog() == DialogResult.OK)
-                {
-                    // Refresh the DataGridView
+                {  
                     LoadAppointments(CurrentQuery);
                 }
+            }
+        }
+
+
+        private void deleteApptBtn_Click(object sender, EventArgs e)
+        {
+            if (apptGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select an appointment to delete.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int appointmentId = Convert.ToInt32(apptGridView.SelectedRows[0].Cells["appointmentId"].Value);
+            string appointmentType = apptGridView.SelectedRows[0].Cells["type"].Value.ToString(); // Optional: Get additional details
+
+            var confirmResult = MessageBox.Show(
+                $"Are you sure you want to delete the selected appointment of type '{appointmentType}'?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (confirmResult != DialogResult.Yes)
+            {
+                return;
+            }
+
+            string query = "DELETE FROM appointment WHERE appointmentId = @AppointmentId";
+
+            try
+            {
+                using (MySqlConnection conn = SqlConnection.GetConnection())
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@AppointmentId", appointmentId);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Appointment deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            LoadAppointments(CurrentQuery);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Unable to delete the appointment. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting appointment: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -192,6 +234,42 @@ namespace C969_Scheduling_App
             LoadAppointments(query);
         }
 
-        
+
+        private void monthCalendar_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            DateTime selectedDate = e.Start;
+            LoadAppointmentsForDate(selectedDate);
+        }
+
+        private void LoadAppointmentsForDate(DateTime date)
+        {
+            string query = @"
+        SELECT * 
+        FROM appointment 
+        WHERE DATE(start) = @SelectedDate";
+
+            try
+            {
+                using (MySqlConnection conn = SqlConnection.GetConnection())
+                {
+                    conn.Open();
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@SelectedDate", date.ToString("yyyy-MM-dd"));
+
+                        MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
+                        DataTable dataTable = new DataTable();
+                        adapter.Fill(dataTable);
+
+                        apptGridView.DataSource = dataTable;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading appointments: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

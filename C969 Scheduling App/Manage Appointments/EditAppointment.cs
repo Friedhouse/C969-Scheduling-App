@@ -16,7 +16,6 @@ namespace C969_Scheduling_App
     {
 
         private int appointmentId;
-        
 
         public EditAppointment(int appointmentId)
         {
@@ -52,8 +51,15 @@ namespace C969_Scheduling_App
                                 textBoxTitle.Text = reader["title"].ToString();
                                 textBoxDescription.Text = reader["description"].ToString();
                                 textBoxType.Text = reader["type"].ToString();
-                                dateTimePickerStart.Value = Convert.ToDateTime(reader["start"]);
-                                dateTimePickerEnd.Value = Convert.ToDateTime(reader["end"]);
+
+                                DateTime utcStart = Convert.ToDateTime(reader["start"]);
+                                DateTime utcEnd = Convert.ToDateTime(reader["end"]);
+
+                                dateTimePickerStart.Value = TimeZoneHelper.ConvertToLocalTime(utcStart);
+                                dateTimePickerEnd.Value = TimeZoneHelper.ConvertToLocalTime(utcEnd);
+
+                                Console.WriteLine($"UTC Start: {utcStart}, Local Start: {dateTimePickerStart.Value}");
+                                Console.WriteLine($"UTC End: {utcEnd}, Local End: {dateTimePickerEnd.Value}");
 
                                 if (reader["customerId"] != DBNull.Value)
                                 {

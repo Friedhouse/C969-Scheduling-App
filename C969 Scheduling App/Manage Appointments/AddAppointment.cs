@@ -77,8 +77,8 @@ namespace C969_Scheduling_App.Manage_Appointments
                         cmd.Parameters.AddWithValue("@Contact", "");
                         cmd.Parameters.AddWithValue("@Type", type);
                         cmd.Parameters.AddWithValue("@Url", "");
-                        cmd.Parameters.AddWithValue("@Start", start);
-                        cmd.Parameters.AddWithValue("@End", end);
+                        cmd.Parameters.AddWithValue("@Start", TimeZoneHelper.ConvertToUtc(dateTimePickerStart.Value));
+                        cmd.Parameters.AddWithValue("@End", TimeZoneHelper.ConvertToUtc(dateTimePickerEnd.Value));
                         cmd.Parameters.AddWithValue("@CreatedBy", LoggedInUser.Username);
                         cmd.Parameters.AddWithValue("@LastUpdateBy", LoggedInUser.Username);
 

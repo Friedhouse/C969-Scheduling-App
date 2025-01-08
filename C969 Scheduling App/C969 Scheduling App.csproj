@@ -98,16 +98,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EditAppointment.cs">
+    <Compile Include="Manage Appointments\EditAppointment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditAppointment.Designer.cs">
+    <Compile Include="Manage Appointments\EditAppointment.Designer.cs">
       <DependentUpon>EditAppointment.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditCustomer.cs">
+    <Compile Include="Manage Customer\EditCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="EditCustomer.Designer.cs">
+    <Compile Include="Manage Customer\EditCustomer.Designer.cs">
       <DependentUpon>EditCustomer.cs</DependentUpon>
     </Compile>
     <Compile Include="Manage Appointments\AddAppointment.cs">
@@ -143,13 +143,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlConnection.cs" />
+    <Compile Include="TimeZoneSet.cs" />
     <EmbeddedResource Include="AppointmentForm.resx">
       <DependentUpon>AppointmentForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditAppointment.resx">
+    <EmbeddedResource Include="Manage Appointments\EditAppointment.resx">
       <DependentUpon>EditAppointment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditCustomer.resx">
+    <EmbeddedResource Include="Manage Customer\EditCustomer.resx">
       <DependentUpon>EditCustomer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">

@@ -70,6 +70,7 @@
             this.deleteApptBtn.TabIndex = 2;
             this.deleteApptBtn.Text = "Delete";
             this.deleteApptBtn.UseVisualStyleBackColor = true;
+            this.deleteApptBtn.Click += new System.EventHandler(this.deleteApptBtn_Click);
             // 
             // editApptBtn
             // 
