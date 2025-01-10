@@ -170,10 +170,9 @@ namespace C969_Scheduling_App
         private void CheckUpcomingAppointments(int userId)
         {
             string query = @"
-        SELECT title, start 
-        FROM appointment 
-        WHERE userId = @UserId 
-        AND TIMESTAMPDIFF(MINUTE, NOW(), start) BETWEEN 0 AND 15";
+                SELECT title, start 
+                FROM appointment 
+                WHERE userId = @UserId";
 
             try
             {
@@ -186,17 +185,26 @@ namespace C969_Scheduling_App
 
                         using (MySqlDataReader reader = cmd.ExecuteReader())
                         {
-                            if (reader.HasRows)
+                            DateTime now = DateTime.Now; // Local time
+                            bool appointmentFound = false;
+                            string alertMessage = "You have the following upcoming appointments within 15 minutes:\n\n";
+
+                            while (reader.Read())
                             {
-                                string alertMessage = "You have the following upcoming appointments within 15 minutes:\n\n";
+                                string title = reader["title"].ToString();
+                                DateTime utcStart = Convert.ToDateTime(reader["start"]);
 
-                                while (reader.Read())
+                                DateTime localStart = TimeZoneHelper.ConvertToLocalTime(utcStart);
+
+                                if (localStart >= now && localStart <= now.AddMinutes(15))
                                 {
-                                    string title = reader["title"].ToString();
-                                    DateTime start = Convert.ToDateTime(reader["start"]);
-                                    alertMessage += $"- {title} at {start.ToString("MM/dd/yyyy hh:mm tt")}\n";
+                                    appointmentFound = true;
+                                    alertMessage += $"- {title} at {localStart:MM/dd/yyyy hh:mm tt}\n";
                                 }
+                            }
 
+                            if (appointmentFound)
+                            {
                                 MessageBox.Show(alertMessage, "Upcoming Appointments", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }

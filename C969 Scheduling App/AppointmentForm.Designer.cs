@@ -41,6 +41,11 @@
             this.manageCustBtn = new System.Windows.Forms.Button();
             this.signOutBtn = new System.Windows.Forms.Button();
             this.closeBtn = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBoxTypes = new System.Windows.Forms.CheckBox();
+            this.checkBoxSchedule = new System.Windows.Forms.CheckBox();
+            this.checkBoxCustomer = new System.Windows.Forms.CheckBox();
+            this.submitBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.apptGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -180,11 +185,67 @@
             this.closeBtn.UseVisualStyleBackColor = true;
             this.closeBtn.Click += new System.EventHandler(this.closeBtn_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(15, 660);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(230, 31);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Generate Reports";
+            // 
+            // checkBoxTypes
+            // 
+            this.checkBoxTypes.AutoSize = true;
+            this.checkBoxTypes.Location = new System.Drawing.Point(35, 710);
+            this.checkBoxTypes.Name = "checkBoxTypes";
+            this.checkBoxTypes.Size = new System.Drawing.Size(210, 17);
+            this.checkBoxTypes.TabIndex = 14;
+            this.checkBoxTypes.Text = "Number of appointment types by month";
+            this.checkBoxTypes.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSchedule
+            // 
+            this.checkBoxSchedule.AutoSize = true;
+            this.checkBoxSchedule.Location = new System.Drawing.Point(35, 733);
+            this.checkBoxSchedule.Name = "checkBoxSchedule";
+            this.checkBoxSchedule.Size = new System.Drawing.Size(136, 17);
+            this.checkBoxSchedule.TabIndex = 15;
+            this.checkBoxSchedule.Text = "Schedule for each user";
+            this.checkBoxSchedule.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxCustomer
+            // 
+            this.checkBoxCustomer.AutoSize = true;
+            this.checkBoxCustomer.Location = new System.Drawing.Point(35, 756);
+            this.checkBoxCustomer.Name = "checkBoxCustomer";
+            this.checkBoxCustomer.Size = new System.Drawing.Size(150, 17);
+            this.checkBoxCustomer.TabIndex = 16;
+            this.checkBoxCustomer.Text = "Appointments by customer";
+            this.checkBoxCustomer.UseVisualStyleBackColor = true;
+            // 
+            // submitBtn
+            // 
+            this.submitBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.submitBtn.Location = new System.Drawing.Point(61, 795);
+            this.submitBtn.Name = "submitBtn";
+            this.submitBtn.Size = new System.Drawing.Size(141, 43);
+            this.submitBtn.TabIndex = 17;
+            this.submitBtn.Text = "Submit";
+            this.submitBtn.UseVisualStyleBackColor = true;
+            this.submitBtn.Click += new System.EventHandler(this.submitBtn_Click);
+            // 
             // AppointmentForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1182, 988);
+            this.Controls.Add(this.submitBtn);
+            this.Controls.Add(this.checkBoxCustomer);
+            this.Controls.Add(this.checkBoxSchedule);
+            this.Controls.Add(this.checkBoxTypes);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.closeBtn);
             this.Controls.Add(this.signOutBtn);
             this.Controls.Add(this.manageCustBtn);
@@ -221,5 +282,10 @@
         private System.Windows.Forms.Button manageCustBtn;
         private System.Windows.Forms.Button signOutBtn;
         private System.Windows.Forms.Button closeBtn;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox checkBoxTypes;
+        private System.Windows.Forms.CheckBox checkBoxSchedule;
+        private System.Windows.Forms.CheckBox checkBoxCustomer;
+        private System.Windows.Forms.Button submitBtn;
     }
 }

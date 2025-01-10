@@ -98,6 +98,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Report Logic\AppointmentData.cs" />
     <Compile Include="Manage Appointments\EditAppointment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -142,8 +143,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report Logic\ReportGenerator.cs" />
     <Compile Include="SqlConnection.cs" />
     <Compile Include="TimeZoneSet.cs" />
+    <Compile Include="Report Logic\UserData.cs" />
     <EmbeddedResource Include="AppointmentForm.resx">
       <DependentUpon>AppointmentForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -187,6 +190,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Report.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

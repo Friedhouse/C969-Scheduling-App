@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,9 @@ namespace C969_Scheduling_App
     public partial class AppointmentForm : Form
     {
         private int userId;
+        private List<Appointment> appointments;
+        private List<User> users;
+
         private string CurrentQuery { get; set; }
 
         public AppointmentForm(int userId)
@@ -80,6 +84,7 @@ namespace C969_Scheduling_App
                 FROM appointment;";
 
             LoadAppointments(CurrentQuery);
+            InitializeReportGenerator();
         }
 
 
@@ -271,5 +276,172 @@ namespace C969_Scheduling_App
             }
         }
 
+
+        private void submitBtn_Click(object sender, EventArgs e)
+        {
+
+            string filePath = "Report.txt"; 
+            StringBuilder reportData = new StringBuilder();
+
+            if (checkBoxTypes.Checked)
+            {
+                var typesByMonth = reportGenerator.GetAppointmentTypesByMonth();
+                typesByMonth.ToList().ForEach(month =>
+                {
+                    reportData.AppendLine($"Appointment Types by Month: {month.Key}");
+                    month.Value.ToList().ForEach(type =>
+                    {
+                        reportData.AppendLine($"  {type.Key}: {type.Value}");
+                    });
+                    reportData.AppendLine(new string('-', 50));
+                });
+            }
+
+            if (checkBoxSchedule.Checked)
+            {
+                var scheduleForUsers = reportGenerator.GetScheduleForEachUser();
+                scheduleForUsers.ToList().ForEach(userSchedule =>
+                {
+                    reportData.AppendLine($"Schedule for User: {userSchedule.Key}");
+                    userSchedule.Value.ForEach(appt =>
+                    {
+                        reportData.AppendLine($"  {appt.Type} at {appt.Start:MM/dd/yyyy hh:mm tt}");
+                    });
+                    reportData.AppendLine(new string('-', 50));
+                });
+            }
+
+            if (checkBoxCustomer.Checked)
+            {
+                var appointmentsByCustomer = reportGenerator.GetAppointmentsByCustomer();
+                appointmentsByCustomer.ToList().ForEach(customer =>
+                {
+                    reportData.AppendLine($"Appointments for Customer: {customer.Key}");
+                    customer.Value.ForEach(appt =>
+                    {
+                        reportData.AppendLine($"  {appt.Type} at {appt.Start:MM/dd/yyyy hh:mm tt}");
+                    });
+                    reportData.AppendLine(new string('-', 50));
+                });
+            }
+
+            if (reportData.Length > 0)
+            {
+                WriteReportToTextFile(filePath, reportData.ToString());
+
+                MessageBox.Show($"Report successfully generated at: {filePath}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //Automatically opens the .txt file
+                System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                });
+            }
+            else
+            {
+                MessageBox.Show("No reports were selected. Please select at least one report to generate.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+
+        private void WriteReportToTextFile(string filePath, string reportData)
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(filePath, false))
+                {
+                    writer.WriteLine(reportData);
+                    writer.WriteLine(new string('-', 50));
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error generating report: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private List<Appointment> LoadAppointments()
+        {
+            List<Appointment> appointments = new List<Appointment>();
+
+            string query = @"
+                SELECT 
+                    a.appointmentId, 
+                    a.type, 
+                    a.start, 
+                    a.end, 
+                    a.userId, 
+                    c.customerName 
+                FROM 
+                    appointment a
+                JOIN 
+                    customer c ON a.customerId = c.customerId";
+
+            using (MySqlConnection conn = SqlConnection.GetConnection())
+            {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            appointments.Add(new Appointment
+                            {
+                                Id = Convert.ToInt32(reader["appointmentId"]),
+                                Type = reader["type"].ToString(),
+                                Start = Convert.ToDateTime(reader["start"]),
+                                End = Convert.ToDateTime(reader["end"]),
+                                UserId = Convert.ToInt32(reader["userId"]),
+                                CustomerName = reader["customerName"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return appointments;
+        }
+
+
+        private List<User> LoadUsers()
+        {
+            List<User> users = new List<User>();
+
+            string query = "SELECT userId, userName FROM user";
+
+            using (MySqlConnection conn = SqlConnection.GetConnection())
+            {
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            users.Add(new User
+                            {
+                                Id = Convert.ToInt32(reader["userId"]),
+                                Name = reader["userName"].ToString()
+                            });
+                        }
+                    }
+                }
+            }
+            return users;
+        }
+
+
+        private ReportGenerator reportGenerator;
+
+        private void InitializeReportGenerator()
+        {
+            List<Appointment> appointments = LoadAppointments();
+            List<User> users = LoadUsers();
+
+            reportGenerator = new ReportGenerator(appointments, users);
+        }
     }
 }

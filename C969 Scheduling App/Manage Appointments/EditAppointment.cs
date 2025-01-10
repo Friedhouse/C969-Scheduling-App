@@ -52,14 +52,24 @@ namespace C969_Scheduling_App
                                 textBoxDescription.Text = reader["description"].ToString();
                                 textBoxType.Text = reader["type"].ToString();
 
-                                DateTime utcStart = Convert.ToDateTime(reader["start"]);
-                                DateTime utcEnd = Convert.ToDateTime(reader["end"]);
+                                if (reader["start"] != DBNull.Value && reader["end"] != DBNull.Value)
+                                {
+                                    DateTime utcStart = Convert.ToDateTime(reader["start"]);
+                                    DateTime utcEnd = Convert.ToDateTime(reader["end"]);
 
-                                dateTimePickerStart.Value = TimeZoneHelper.ConvertToLocalTime(utcStart);
-                                dateTimePickerEnd.Value = TimeZoneHelper.ConvertToLocalTime(utcEnd);
+                                    dateTimePickerStart.Value = TimeZoneHelper.ConvertToLocalTime(utcStart);
+                                    dateTimePickerEnd.Value = TimeZoneHelper.ConvertToLocalTime(utcEnd);
 
-                                Console.WriteLine($"UTC Start: {utcStart}, Local Start: {dateTimePickerStart.Value}");
-                                Console.WriteLine($"UTC End: {utcEnd}, Local End: {dateTimePickerEnd.Value}");
+                                    dateTimePickerStart.Value = TimeZoneHelper.ConvertToLocalTime(utcStart);
+                                    dateTimePickerEnd.Value = TimeZoneHelper.ConvertToLocalTime(utcEnd);
+
+                                    dateTimePickerStart.Refresh();
+                                    dateTimePickerEnd.Refresh();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("The appointment times are missing or invalid in the database.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
 
                                 if (reader["customerId"] != DBNull.Value)
                                 {
@@ -128,8 +138,8 @@ namespace C969_Scheduling_App
                             cmd.Parameters.AddWithValue("@Title", textBoxTitle.Text.Trim());
                             cmd.Parameters.AddWithValue("@Description", textBoxDescription.Text.Trim());
                             cmd.Parameters.AddWithValue("@Type", textBoxType.Text.Trim());
-                            cmd.Parameters.AddWithValue("@Start", dateTimePickerStart.Value);
-                            cmd.Parameters.AddWithValue("@End", dateTimePickerEnd.Value);
+                            cmd.Parameters.AddWithValue("@Start", TimeZoneHelper.ConvertToUtc(dateTimePickerStart.Value));
+                            cmd.Parameters.AddWithValue("@End", TimeZoneHelper.ConvertToUtc(dateTimePickerEnd.Value));
                             cmd.Parameters.AddWithValue("@CustomerId", customerId);
                             cmd.Parameters.AddWithValue("@UserId", LoggedInUser.UserId);
                             cmd.Parameters.AddWithValue("@Location", ""); 
@@ -288,10 +298,6 @@ namespace C969_Scheduling_App
             dateTimePickerEnd.Format = DateTimePickerFormat.Custom;
             dateTimePickerEnd.CustomFormat = "MM/dd/yyyy hh:mm tt";
             dateTimePickerEnd.ShowUpDown = true;
-
-            // Set default values
-            dateTimePickerStart.Value = DateTime.Now;
-            dateTimePickerEnd.Value = DateTime.Now.AddHours(1);
         }
 
 
