@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using System.Drawing.Text;
+using System.IO;
 
 namespace C969_Scheduling_App
 {
@@ -44,6 +45,7 @@ namespace C969_Scheduling_App
                     LoggedInUser.UserId = userId;
                     LoggedInUser.Username = username;
                     CheckUpcomingAppointments(userId);
+                    LogLogin(username);
 
                     this.Hide();
                     using (AppointmentForm appointmentForm = new AppointmentForm(userId))
@@ -214,6 +216,24 @@ namespace C969_Scheduling_App
             catch (Exception ex)
             {
                 MessageBox.Show($"Error checking upcoming appointments: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LogLogin(string username)
+        {
+            string logFilePath = "Login_History.txt";
+            string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(logFilePath, true))
+                {
+                    writer.WriteLine($"{timestamp} - {username}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error writing to login history: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
