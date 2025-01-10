@@ -44,6 +44,7 @@ namespace C969_Scheduling_App
                     //Stores the logged in user info globally.
                     LoggedInUser.UserId = userId;
                     LoggedInUser.Username = username;
+
                     CheckUpcomingAppointments(userId);
                     LogLogin(username);
 
@@ -221,7 +222,8 @@ namespace C969_Scheduling_App
 
         private void LogLogin(string username)
         {
-            string logFilePath = "Login_History.txt";
+            Console.WriteLine($"LogLogin called for user: {username}");
+            string logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "LoginHistory.txt"); //Saves LoginHistory.txt file to My Documents.
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
             try
